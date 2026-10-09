@@ -243,9 +243,6 @@ export const GrowersPage: React.FC = () => {
 					boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
 				}}
 			>
-				<IconButton color="inherit" sx={{ mr: 2, p: 0 }}>
-					<ArrowBackIcon />
-				</IconButton>
 				<Typography
 					variant="h6"
 					sx={{ fontWeight: 500, fontSize: "1.25rem" }}
