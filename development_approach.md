@@ -1,0 +1,2 @@
+A camada de apresentação inicial foi acelerada com auxílio de inteligência artificial a partir dos contratos dos endpoints desenvolvidos.
+A partir dessa base, a arquitetura de componentes, o isolamento de estados, a estrutura de pastas e os ajustes de responsividade/design foram refinados manualmente para garantir manutenibilidade e aderência ao layout.

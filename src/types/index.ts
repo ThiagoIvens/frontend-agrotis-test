@@ -55,6 +55,11 @@ export interface FarmsteadRequestDTO {
 	growerId?: string;
 }
 
+export interface farmsteadSummaryDTO {
+	id: string;
+	name: string;
+}
+
 export interface GrowerDTO {
 	id: string;
 	name: string;
@@ -62,7 +67,7 @@ export interface GrowerDTO {
 	address: string;
 	laboratoryName: string;
 	laboratoryId: string;
-	farmsteadIds: string[];
+	farmsteads: farmsteadSummaryDTO[];
 	production: number;
 	commissionRate: number;
 	calculatedValue: number;
