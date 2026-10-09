@@ -9,6 +9,7 @@ import {
 	MenuItem,
 	Modal,
 	Snackbar,
+	TextField,
 	Typography,
 } from "@mui/material";
 import {
@@ -56,6 +57,9 @@ const initialForm: GrowerRequestDTO = {
 
 export const GrowersPage: React.FC = () => {
 	const [growers, setGrowers] = useState<GrowerDTO[]>([]);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [searchOpen, setSearchOpen] = useState(false);
+
 	const [labs, setLabs] = useState<LaboratoryDTO[]>([]);
 	const [farmsteads, setFarmsteads] = useState<FarmsteadDTO[]>([]);
 
@@ -85,12 +89,12 @@ export const GrowersPage: React.FC = () => {
 		severity: "success" | "error";
 	}>({ open: false, msg: "", severity: "success" });
 
-	const fetchData = async () => {
+	const fetchData = async (query = "") => {
 		setLoading(true);
 		try {
 			const [growersRes, labsRes, farmsteadsRes] = await Promise.all([
 				api.get<PaginatedResponse<GrowerDTO>>(
-					"/growers?page=0&size=100",
+					`/growers?page=0&size=100${query ? `&search=${encodeURIComponent(query)}` : ""}`,
 				),
 				api.get<PaginatedResponse<LaboratoryDTO>>(
 					"/laboratories?page=0&size=100",
@@ -116,6 +120,12 @@ export const GrowersPage: React.FC = () => {
 	useEffect(() => {
 		fetchData();
 	}, []);
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const val = e.target.value;
+		setSearchTerm(val);
+		fetchData(val);
+	};
 
 	const handleMenuOpen = (
 		event: React.MouseEvent<HTMLElement>,
@@ -276,9 +286,22 @@ export const GrowersPage: React.FC = () => {
 						ADICIONAR
 					</Button>
 				</Box>
-				<IconButton sx={{ color: "#666" }}>
-					<SearchIcon />
-				</IconButton>
+				<Box display="flex" alignItems="center" gap={1}>
+					<TextField
+						size="small"
+						placeholder="Pesquisar por nome ou CPF..."
+						value={searchTerm}
+						onChange={handleSearchChange}
+						variant="outlined"
+						sx={{ width: 250 }}
+					/>
+					<IconButton
+						sx={{ color: "#666" }}
+						onClick={() => fetchData(searchTerm)}
+					>
+						<SearchIcon />
+					</IconButton>
+				</Box>
 			</Box>
 
 			<Box sx={{ p: 4 }}>
